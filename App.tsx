@@ -4,19 +4,18 @@ import {SafeAreaView, View} from 'react-native';
 import {Text} from './src/components/Text/Text';
 import {ThemeProvider} from '@shopify/restyle';
 import {theme} from './src/theme/theme';
-import {Icon} from './src/assets/icons/Icon';
 
 function App(): React.JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaView>
         <View style={{paddingHorizontal: 24}}>
-          <Text preset="headingLarge">App</Text>
-          <Icon name="eyeOn" color="error" size={100} />
-          <Icon name="arrowLeft" color="carrotSecondary" size={100} />
-          <Icon name="chevronRight" color="carrotSecondary" size={100} />
-
-
+          <Text mb="s8" preset="headingLarge">
+            Olá
+          </Text>
+          <Text preset="paragraphLarge" mb="s40">
+            Digite seu e-mail e senha para entrar
+          </Text>
         </View>
       </SafeAreaView>
     </ThemeProvider>
