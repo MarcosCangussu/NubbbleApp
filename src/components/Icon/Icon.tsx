@@ -9,40 +9,57 @@ import {BellIcon} from '../../assets/icons/BellIcon';
 import {BellOnIcon} from '../../assets/icons/BellOnIcon';
 import {BookmarkIcon} from '../../assets/icons/BookmarkIcon';
 import {BookmarkFillIcon} from '../../assets/icons/BookmarkFillIcon';
-import { CameraIcon } from '../../assets/icons/CameraIcon';
-import { ChatIcon } from '../../assets/icons/ChatIcon';
-import { ChatOnIcon } from '../../assets/icons/ChatOnIcon';
-import { CheckIcon } from '../../assets/icons/CheckIcon';
-import { CommentIcon } from '../../assets/icons/CommentIcon';
-import { ChevronRightIcon } from '../../assets/icons/ChevronRightIcon';
-import { FlashOnIcon } from '../../assets/icons/FlashOnIcon';
-import { FlashOffIcon } from '../../assets/icons/FlashOffIcon';
-import { HeartIcon } from '../../assets/icons/HeartIcon';
-import { HeartFillIcon } from '../../assets/icons/HeartFillIcon';
-import { HomeIcon } from '../../assets/icons/HomeIcon';
-import { HomeFillIcon } from '../../assets/icons/HomeFillIcon';
-import { MessageIcon } from '../../assets/icons/MessageIcon';
-import { NewPostIcon } from '../../assets/icons/NewPostIcon';
-import { ProfileIcon } from '../../assets/icons/ProfileIcon';
-import { ProfileFillIcon } from '../../assets/icons/ProfileFillIcon';
-import { SearchIcon } from '../../assets/icons/SearchIcon';
-import { SettingsIcon } from '../../assets/icons/SettingsIcon';
-import { TrashIcon } from '../../assets/icons/TrashIcon';
+import {CameraIcon} from '../../assets/icons/CameraIcon';
+import {ChatIcon} from '../../assets/icons/ChatIcon';
+import {ChatOnIcon} from '../../assets/icons/ChatOnIcon';
+import {CheckIcon} from '../../assets/icons/CheckIcon';
+import {CommentIcon} from '../../assets/icons/CommentIcon';
+import {ChevronRightIcon} from '../../assets/icons/ChevronRightIcon';
+import {FlashOnIcon} from '../../assets/icons/FlashOnIcon';
+import {FlashOffIcon} from '../../assets/icons/FlashOffIcon';
+import {HeartIcon} from '../../assets/icons/HeartIcon';
+import {HeartFillIcon} from '../../assets/icons/HeartFillIcon';
+import {HomeIcon} from '../../assets/icons/HomeIcon';
+import {HomeFillIcon} from '../../assets/icons/HomeFillIcon';
+import {MessageIcon} from '../../assets/icons/MessageIcon';
+import {NewPostIcon} from '../../assets/icons/NewPostIcon';
+import {ProfileIcon} from '../../assets/icons/ProfileIcon';
+import {ProfileFillIcon} from '../../assets/icons/ProfileFillIcon';
+import {SearchIcon} from '../../assets/icons/SearchIcon';
+import {SettingsIcon} from '../../assets/icons/SettingsIcon';
+import {TrashIcon} from '../../assets/icons/TrashIcon';
+import {Pressable} from 'react-native';
+import { CheckRoundIcon } from '../../assets/icons/CheckRoundIcon';
+import { MessageRoundIcon } from '../../assets/icons/messageRoundIcon';
 
 export interface IconBase {
   size?: number;
   color?: string;
 }
 
-interface Props {
+export interface IconProps {
   name: IcoName;
   color?: ThemeColors;
   size?: number;
+  onPress?: () => void;
 }
 
-export function Icon({name, color = 'backgroundContrast', size}: Props) {
+export function Icon({
+  name,
+  color = 'backgroundContrast',
+  size,
+  onPress,
+}: IconProps) {
   const {colors} = UseAppTheme();
   const SvgIcon = iconRegistry[name];
+
+  if (onPress) {
+    return (
+      <Pressable hitSlop={10} onPress={onPress}>
+        <SvgIcon color={colors[color]} size={size} />
+      </Pressable>
+    );
+  }
 
   return <SvgIcon color={colors[color]} size={size} />;
 }
@@ -58,6 +75,7 @@ const iconRegistry = {
   chat: ChatIcon,
   chatOn: ChatOnIcon,
   check: CheckIcon,
+  checkRound: CheckRoundIcon,
   comment: CommentIcon,
   chevronRight: ChevronRightIcon,
   eyeOn: EyeOnIcon,
@@ -69,6 +87,7 @@ const iconRegistry = {
   home: HomeIcon,
   homeFill: HomeFillIcon,
   message: MessageIcon,
+  messageRound:MessageRoundIcon,
   newPost: NewPostIcon,
   profile: ProfileIcon,
   profileFill: ProfileFillIcon,
