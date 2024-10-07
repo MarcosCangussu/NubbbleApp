@@ -1,5 +1,10 @@
 import React from 'react';
-import {ScrollView, View} from 'react-native';
+import {
+  Keyboard,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {UseAppTheme} from '../../../hooks/useAppTheme';
 
 interface Props {
@@ -18,9 +23,11 @@ export function ScrollViewContainer({children, backgroundColor}: Props) {
 }
 
 export function ViewContainer({children, backgroundColor}: Props) {
-  return <View style={{backgroundColor, flex: 1}}>{children}</View>;
+  return (
+    // <View style={{backgroundColor, flex: 1}}>{children}</View>;
 
-  // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-  //     <View>{children}</View>
-  // </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{backgroundColor, flex: 1}}>{children}</View>
+    </TouchableWithoutFeedback>
+  );
 }

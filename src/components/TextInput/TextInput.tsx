@@ -40,30 +40,27 @@ export function TextInput({
 
   return (
     <Box {...boxProps}>
-        <Pressable onPress={focusInput}>
         <Text mb="s4" preset="paragraphMedium">
           {label}
         </Text>
+      <Pressable onPress={focusInput}>
         <Box {...$textInputContainer}>
           <RNTextInput
+            autoCapitalize="none"
             ref={inputRef}
             placeholderTextColor={colors.gray2}
             style={$textInputStyle}
             {...rnTextInput}
           />
-          {RightComponent && (
-            <Box ml='s16'>
-              {RightComponent}
-            </Box>
-          )}
+          {RightComponent && <Box ml="s16">{RightComponent}</Box>}
         </Box>
         {errorMessage && (
           <Text preset="paragraphSmall" bold color="error">
             {errorMessage}
           </Text>
         )}
-    </Pressable>
-      </Box>
+      </Pressable>
+    </Box>
   );
 }
 

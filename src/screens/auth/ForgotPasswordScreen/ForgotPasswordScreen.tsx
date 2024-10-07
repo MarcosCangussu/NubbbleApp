@@ -7,6 +7,14 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../routes/Routes';
 import {TextInput} from '../../../components/TextInput/TextInput';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
+import {FormTextInput} from '../../../components/Form/FormTextInput';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  forgotPasswordSchema,
+  ForgotPasswordSchema,
+} from './ForgotPasswordSchema';
+import {Alert} from 'react-native';
 
 type ScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -16,7 +24,17 @@ type ScreenProps = NativeStackScreenProps<
 export function ForgotPasswordScreen({navigation}: ScreenProps) {
   const {reset} = useResetNavigationSuccess();
 
-  function submitForm() {
+  const {control, formState, handleSubmit} = useForm<ForgotPasswordSchema>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
+    mode: 'onChange',
+  });
+
+  function submitForm({email}: ForgotPasswordSchema) {
+    Alert.alert(`E-mail: ${email}`);
+
     reset({
       title: `Enviamos as instruções ${'\n'}para seu e-mail`,
       description:
@@ -36,13 +54,21 @@ export function ForgotPasswordScreen({navigation}: ScreenProps) {
       <Text preset="paragraphLarge" mb="s32">
         Digite seu e-mail e enviaremos as instruções para a redefinição de senha
       </Text>
-      <TextInput
-        errorMessage="Teste erro"
+
+      <FormTextInput
+        control={control}
+        name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{mb: 's40'}}
       />
-      <Button onPress={submitForm} title="Recuperar senha" mt="s40" />
+
+      <Button
+        disabled={!formState.isValid}
+        onPress={handleSubmit(submitForm)}
+        title="Recuperar senha"
+        mt="s40"
+      />
     </Screen>
   );
 }
