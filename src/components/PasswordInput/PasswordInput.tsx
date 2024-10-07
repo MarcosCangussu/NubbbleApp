@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
+
+import {Icon} from '@components';
+
 import {TextInput, TextInputProps} from '../TextInput/TextInput';
-import {Icon} from '../Icon/Icon';
-import {Pressable} from 'react-native';
 
 export type PasswordInputProps = Omit<TextInputProps, 'RightComponent'>;
 

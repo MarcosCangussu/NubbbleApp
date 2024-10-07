@@ -5,7 +5,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {UseAppTheme} from '../../../hooks/useAppTheme';
 
 interface Props {
   children: React.ReactNode;

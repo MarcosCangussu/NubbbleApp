@@ -1,21 +1,20 @@
 import React from 'react';
 import {Alert} from 'react-native';
-import {Text} from '../../../components/Text/Text';
-import {Button} from '../../../components/Button/Button';
-import {Screen} from '../../../components/Screen/Screen';
 
+import {zodResolver} from '@hookform/resolvers/zod';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../routes/Routes';
 import {useForm} from 'react-hook-form';
-import {FormTextInput} from '../../../components/Form/FormTextInput';
-import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
-import { loginSchema, LoginSchema } from './LoginSchema';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-type LoginFormType = {
-  email: string;
-  password: string;
-};
+import {
+  Text,
+  Button,
+  Screen,
+  FormTextInput,
+  FormPasswordInput,
+} from '@components';
+import {RootStackParamList} from '@routes';
+
+import {loginSchema, LoginSchema} from './LoginSchema';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
@@ -26,7 +25,6 @@ export function LoginScreen({navigation}: ScreenProps) {
   function navigateToForgotPasswordScreen() {
     navigation.navigate('ForgotPasswordScreen');
   }
-
   const {control, formState, handleSubmit} = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
