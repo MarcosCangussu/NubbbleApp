@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
+
 import {
   Box,
   BoxProps,
@@ -9,12 +11,11 @@ import {
   TouchableOpacityBox,
   TouchableOpacityBoxProps,
 } from '@components';
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
-import {mapScreenToProps} from './mapScreenProps';
-import {AppTabBottomTabParamList} from './AppTabNavigator';
 import {useAppSafeArea} from '@hooks';
-import {ViewStyle} from 'react-native';
 import {$shadowProps} from '@theme';
+
+import {AppTabBottomTabParamList} from './AppTabNavigator';
+import {mapScreenToProps} from './mapScreenProps';
 
 export function AppTabBar({state, descriptors, navigation}: BottomTabBarProps) {
   const {bottom} = useAppSafeArea();
@@ -56,6 +57,7 @@ export function AppTabBar({state, descriptors, navigation}: BottomTabBarProps) {
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{flex: 1}}>
             <Icon
               color={isFocused ? 'primary' : 'backgroundContrast'}
@@ -72,7 +74,7 @@ export function AppTabBar({state, descriptors, navigation}: BottomTabBarProps) {
     </Box>
   );
 }
- 
+
 const $label: TextProps = {
   semibold: true,
   marginTop: 's4',

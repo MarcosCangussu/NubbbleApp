@@ -5,13 +5,13 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 
-import {Box} from '@components';
 import {
   FavoriteScreen,
   HomeScreen,
   MyProfileScreen,
   NewPostScreen,
 } from '@screens';
+
 import {AppTabBar} from './AppTabBar';
 
 const Tab = createBottomTabNavigator<AppTabBottomTabParamList>();
