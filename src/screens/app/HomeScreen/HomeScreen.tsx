@@ -1,18 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
+import React from 'react';
+import {
+  FlatList,
+  ListRenderItemInfo,
+  RefreshControl,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
-import {Post, postService} from '@domain';
+import {Post, usePostList} from '@domain';
+import { useScrollToTop } from '@react-navigation/native';
 
 import {Screen, PostItem} from '@components';
 import {AppTabScreenProps} from '@routes';
 
-import { HomeHeader } from './components/HomeHeader';
+import {HomeEmpty} from './components/HomeEmpty';
+import {HomeHeader} from './components/HomeHeader';
 
-export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
-  const [postList, setPostList] = useState<Post[]>([]);
-  useEffect(() => {
-    postService.getList().then(list => setPostList(list));
-  });
+export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
+  const {postList, error, loading, refresh, fetchNextPage} = usePostList();
+
+  const flatListRef = React.useRef<FlatList<Post>>(null);
+  useScrollToTop(flatListRef);
 
   function renderItem({item}: ListRenderItemInfo<Post>) {
     return <PostItem post={item} />;
@@ -21,11 +29,21 @@ export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
   return (
     <Screen style={$style}>
       <FlatList
-      showsVerticalScrollIndicator={false}
+        ref={flatListRef}
+        showsVerticalScrollIndicator={false}
         data={postList}
         keyExtractor={item => item.id}
         renderItem={renderItem}
-        ListHeaderComponent={<HomeHeader/>}
+        onEndReached={fetchNextPage}
+        refreshing={loading}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refresh} />
+        }
+        contentContainerStyle={{flex: postList.length === 0 ? 1 : 0}}
+        ListHeaderComponent={<HomeHeader />}
+        ListEmptyComponent={
+          <HomeEmpty refetch={refresh} error={error} loading={loading} />
+        }
       />
     </Screen>
   );
@@ -35,4 +53,5 @@ const $style: StyleProp<ViewStyle> = {
   paddingTop: 0,
   paddingBottom: 0,
   paddingHorizontal: 0,
+  flex: 1,
 };
